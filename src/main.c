@@ -46,7 +46,7 @@ void dfs(int g[V][V], bool* pos, int start, int* prev)
     }
 }
 
-void GGWP(int g[V][V], int src, int dst, bool* pos)
+void Number_of_paths(int g[V][V], int src, int dst, bool* pos)
 {
     pos[src] = true;
     if (src == dst) {
@@ -54,7 +54,7 @@ void GGWP(int g[V][V], int src, int dst, bool* pos)
     } else {
         for (int i = 0; i < V; ++i) {
             if (g[src][i] != INT_MAX && !pos[i]) {
-                GGWP(g, i, dst, pos);
+                Number_of_paths(g, i, dst, pos);
                 for (int j = i + 1; j < V; ++j) {
                     pos[j] = false;
                 }
@@ -62,26 +62,6 @@ void GGWP(int g[V][V], int src, int dst, bool* pos)
             }
         }
     }
-}
-
-int kolvo(int g[V][V], int src, int dst)
-{
-    int* d = malloc(sizeof(int) * V);
-    bool* pos = malloc(sizeof(bool) * V);
-    for (int i = 0; i < V; ++i) {
-        d[i] = 0;
-        pos[i] = false;
-    }
-    d[src] = 1;
-    for (int i = 0; i < V; ++i) {
-        for (int j = 0; j < V; ++j) {
-            if (g[i][j] != INT_MAX && !pos[j]) {
-                d[j] = d[i] + d[j];
-            }
-        }
-        pos[i] = true;
-    }
-    return d[dst];
 }
 
 int PriorityQueueExtractMin(int* D, bool* pos)
@@ -190,7 +170,7 @@ int main()
         pos[i] = false;
         prev[i] = -1;
     }
-    GGWP(g, src, dst, pos);
+    Number_of_paths(g, src, dst, pos);
     for (int i = 0; i < V; ++i) {
         pos[i] = false;
         prev[i] = -1;
