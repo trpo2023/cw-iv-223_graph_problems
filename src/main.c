@@ -7,6 +7,8 @@
 #define V 5
 #define INT_MAX 1000000000
 
+int count;
+
 void bfs(int g[V][V], int v, bool* pos, int* prev)
 {
     struct queue* q;
@@ -40,6 +42,24 @@ void dfs(int g[V][V], bool* pos, int start, int* prev)
         if (!pos[i] && g[start][i] != INT_MAX) {
             prev[i] = start;
             dfs(g, pos, i, prev);
+        }
+    }
+}
+
+void GGWP(int g[V][V], int src, int dst, bool* pos)
+{
+    pos[src] = true;
+    if (src == dst) {
+        count++;
+    } else {
+        for (int i = 0; i < V; ++i) {
+            if (g[src][i] != INT_MAX && !pos[i]) {
+                GGWP(g, i, dst, pos);
+                for (int j = i + 1; j < V; ++j) {
+                    pos[j] = false;
+                }
+                printf("%d\n", count);
+            }
         }
     }
 }
@@ -161,10 +181,16 @@ int main()
     dst--;
     v--; // src - от какой вершины смотрим
     print(g, D, src, prev, dst, pos); // dst - вершина у которой смотрим путь
-    printf("\nКоличество путей из %d в %d : %d\n",
+    /*printf("\nКоличество путей из %d в %d : %d\n",
            src + 1,
            dst + 1,
            kolvo(g, src, dst));
+           */
+    for (int i = 0; i < V; ++i) {
+        pos[i] = false;
+        prev[i] = -1;
+    }
+    GGWP(g, src, dst, pos);
     for (int i = 0; i < V; ++i) {
         pos[i] = false;
         prev[i] = -1;
