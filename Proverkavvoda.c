@@ -183,16 +183,14 @@ int main()
         }
     }
     */
-    int src, dst;
+    int src, dst,K;
+
+    do {
     printf("Введите количество вершин : ");
-    if (!scanf("%d", &V)){
-        printf("ERROR\n");
-        return -1;
-    }
-    if (V <= 0) {
-        printf("ERROR\n");
-        return -1;
-    }
+    K = scanf("%d", &V);
+    my_flush();
+    }while (K != 1||K<=0);
+
     int** g = malloc(sizeof(int*) * V);
     for (int i = 0; i < V; ++i) {
         g[i] = malloc(sizeof(int) * V);
@@ -227,17 +225,19 @@ int main()
   
   
     int ch;
+    int P;
     char vvod[NAME_SIZE];
     int* D = malloc(sizeof(int) * V);
     bool* pos = malloc(sizeof(bool) * V);
     int* prev = malloc(sizeof(int) * V);
+    do{
     printf( "Что бы вы хотели найти, введите соответствующий символ:\n" );
-    printf( "1. Кол-во путей между вершинами\n" );
-    printf( "2. Кротчайший путь между вершинами \n" );        
-    printf( "3. длиннейший путь между вершинами \n" );
-    printf( "4. Выход\n" );
+    printf( "1. Кол-во путей между вершинами:\n" );
+    printf( "2. Кротчайший путь между вершинами: \n" );        
+    printf( "3. длиннейший путь между вершинами: \n" );
+    printf( "4. для выхода:\n" );
     printf( "Ваш выбор: " );
-    scanf("%d",&ch);
+    P = scanf("%d",&ch);
     switch(ch)
     {
         case 1:           
@@ -256,8 +256,10 @@ int main()
         case 4:
             break;
         default:
-            printf( "Неправильный ввод.\n" );
+            printf( "Некорректный символ, попробуйте ещё раз.\n" );
     }
+    my_flush();
+    }while(P != 1);
     //int src = 1, dst = 5, v = 1; // v - от какой вершины делать поиск в глубину и ширину
     //src--;
     //dst--;
@@ -267,6 +269,7 @@ int main()
                {10, INT_MAX, 50, INT_MAX, INT_MAX},
                {INT_MAX, 50, INT_MAX, 20, 10},
                {30, INT_MAX, 20, INT_MAX, 60},
-               {100, INT_MAX, 10, 60, INT_MAX}};
+             {100, INT_MAX, 10, 60, INT_MAX}};
+
   */
 }
