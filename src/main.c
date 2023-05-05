@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define V 5
+#define V 6
 #define INT_MAX 1000000000
 
 int count;
@@ -51,17 +51,16 @@ void Number_of_paths(int g[V][V], int src, int dst, bool* pos)
     pos[src] = true;
     if (src == dst) {
         count++;
+        pos[dst] = false;
     } else {
         for (int i = 0; i < V; ++i) {
             if (g[src][i] != INT_MAX && !pos[i]) {
                 Number_of_paths(g, i, dst, pos);
-                for (int j = i + 1; j < V; ++j) {
-                    pos[j] = false;
-                }
-                printf("%d\n", count);
+                pos[i] = false;
             }
         }
     }
+    printf("%d\n", count);
 }
 
 int PriorityQueueExtractMin(int* D, bool* pos)
@@ -146,26 +145,29 @@ int main()
         }
     }
     */
+    /*
+     int g[V][V]
+             = {{INT_MAX, 10, 10, 30, 100},
+                {10, INT_MAX, 50, 10, 10},
+                {10, 50, INT_MAX, 20, 10},
+                {30, 10, 20, INT_MAX, 60},
+                {100, 10, 10, 60, INT_MAX}};
+                */
     int g[V][V]
-            = {{INT_MAX, 10, INT_MAX, 30, 100},
-               {10, INT_MAX, 50, INT_MAX, INT_MAX},
-               {INT_MAX, 50, INT_MAX, 20, 10},
-               {30, INT_MAX, 20, INT_MAX, 60},
-               {100, INT_MAX, 10, 60, INT_MAX}};
+            = {{INT_MAX, 1, 1, INT_MAX, 1, INT_MAX},
+               {1, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX},
+               {1, INT_MAX, INT_MAX, INT_MAX, 1, INT_MAX},
+               {INT_MAX, INT_MAX, INT_MAX, INT_MAX, 1, INT_MAX},
+               {1, INT_MAX, 1, 1, INT_MAX, INT_MAX},
+               {INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX}};
     int* D = malloc(sizeof(int) * V);
     bool* pos = malloc(sizeof(bool) * V);
     int* prev = malloc(sizeof(int) * V);
-    int src = 1, dst = 5,
-        v = 1; // v - от какой вершины делать поиск в глубину и ширину
+    int src = 4,
+        dst = 3; // v - от какой вершины делать поиск в глубину и ширину
     src--;
-    dst--;
-    v--; // src - от какой вершины смотрим
+    dst--;       // src - от какой вершины смотрим
     print(g, D, src, prev, dst, pos); // dst - вершина у которой смотрим путь
-    /*printf("\nКоличество путей из %d в %d : %d\n",
-           src + 1,
-           dst + 1,
-           kolvo(g, src, dst));
-           */
     for (int i = 0; i < V; ++i) {
         pos[i] = false;
         prev[i] = -1;
@@ -176,14 +178,14 @@ int main()
         prev[i] = -1;
     }
     printf("Обход в глубину\n");
-    dfs(g, pos, v, prev);
+    dfs(g, pos, src, prev);
     printf("\n");
     for (int i = 0; i < V; ++i) {
         pos[i] = false;
         prev[i] = -1;
     }
     printf("Обход в ширину\n");
-    bfs(g, v, pos, prev);
+    bfs(g, src, pos, prev);
     printf("\n");
     free(D);
     free(pos);
