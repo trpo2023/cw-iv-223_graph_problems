@@ -1,14 +1,14 @@
-#include "queue_array.h"
+#include "graph.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-#define V 6
+#define V 5
 #define INT_MAX 1000000000
 
 int count;
-
+/*
 void bfs(int g[V][V], int v, bool* pos, int* prev)
 {
     struct queue* q;
@@ -104,7 +104,7 @@ void print(int g[V][V], int* D, int src, int* prev, int dst, bool* pos)
     }
     /*for (int i = 0, z = 1; i < V; ++i) {
         printf("%d : %d\n", z++, prev[i] + 1);
-    }*/
+    }
     printf("\n");
     int i = dst, count = 0;
     while (prev[i] != prev[src]) {
@@ -123,11 +123,11 @@ void print(int g[V][V], int* D, int src, int* prev, int dst, bool* pos)
     }
     printf("\n");
 }
-
+*/
 int main()
 {
     srand(time(NULL));
-    /*
+
     int** g = malloc(sizeof(int*) * V);
     for (int i = 0; i < V; ++i) {
         g[i] = malloc(sizeof(int) * V);
@@ -140,11 +140,11 @@ int main()
     for (int i = 0; i < V - 1; ++i) {
         for (int j = 0; j < V; ++j) {
             if (i != j) {
-                g[i][j] = 1 + rand() % 100;
+                g[i][j] = rand() % 100;
             }
         }
     }
-    */
+
     /*
      int g[V][V]
              = {{INT_MAX, 10, 10, 30, 100},
@@ -153,6 +153,7 @@ int main()
                 {30, 10, 20, INT_MAX, 60},
                 {100, 10, 10, 60, INT_MAX}};
                 */
+    /*
     int g[V][V]
             = {{INT_MAX, 1, 1, INT_MAX, 1, INT_MAX},
                {1, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX},
@@ -160,32 +161,36 @@ int main()
                {INT_MAX, INT_MAX, INT_MAX, INT_MAX, 1, INT_MAX},
                {1, INT_MAX, 1, 1, INT_MAX, INT_MAX},
                {INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX}};
+    */
     int* D = malloc(sizeof(int) * V);
     bool* pos = malloc(sizeof(bool) * V);
     int* prev = malloc(sizeof(int) * V);
-    int src = 4,
-        dst = 3; // v - от какой вершины делать поиск в глубину и ширину
+    int src = 1, dst = 5,
+        count = 0; // v - от какой вершины делать поиск в глубину и ширину
     src--;
-    dst--;       // src - от какой вершины смотрим
-    print(g, D, src, prev, dst, pos); // dst - вершина у которой смотрим путь
+    dst--;         // src - от какой вершины смотрим
+    print(g, D, src, prev, dst, pos, V); // dst - вершина у которой смотрим путь
     for (int i = 0; i < V; ++i) {
         pos[i] = false;
         prev[i] = -1;
     }
-    Number_of_paths(g, src, dst, pos);
+    printf("Количество путей из %d в %d - ", src + 1, dst + 1);
+    Number_of_paths(g, src, dst, pos, V, &count);
+    printf("%d\n", count);
+    count = 0;
     for (int i = 0; i < V; ++i) {
         pos[i] = false;
         prev[i] = -1;
     }
     printf("Обход в глубину\n");
-    dfs(g, pos, src, prev);
+    dfs(g, pos, src, prev, V);
     printf("\n");
     for (int i = 0; i < V; ++i) {
         pos[i] = false;
         prev[i] = -1;
     }
     printf("Обход в ширину\n");
-    bfs(g, src, pos, prev);
+    bfs(g, src, pos, prev, V);
     printf("\n");
     free(D);
     free(pos);
