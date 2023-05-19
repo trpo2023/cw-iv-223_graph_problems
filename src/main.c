@@ -1,0 +1,240 @@
+#include "graph.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define INT_MAX 1000000000
+#define MAX_V 99
+#define NAME_SIZE 111
+
+int count,V;
+/*
+void bfs(int g[V][V], int v, bool* pos, int* prev)
+{
+    struct queue* q;
+    for (int i = 0; i < V; i++) {
+        pos[i] = false;
+        prev[i] = -1;
+    }
+    q = queue_create(V); // Создаём очередь
+    pos[v] = true; // Обрабатываем стартовую вершину
+    printf("Vertex % d\n", v + 1);
+    queue_enqueue(q, v);
+    while (queue_size(q) > 0) {
+        int i = queue_dequeue(q);
+        for (int j = 0; j < V; j++) {
+            if (g[i][j] != INT_MAX && !pos[j]) {
+                queue_enqueue(q, j);
+                pos[j] = true;
+                prev[j] = i;
+                printf("Vertex % d\n", j + 1);
+            }
+        }
+    }
+    queue_free(q);
+}
+
+void dfs(int g[V][V], bool* pos, int start, int* prev)
+{
+    pos[start] = true;
+    printf("Vertex % d\n", start + 1);
+    for (int i = 0; i < V; ++i) {
+        if (!pos[i] && g[start][i] != INT_MAX) {
+            prev[i] = start;
+            dfs(g, pos, i, prev);
+        }
+    }
+}
+
+void Number_of_paths(int g[V][V], int src, int dst, bool* pos)
+{
+    pos[src] = true;
+    if (src == dst) {
+        count++;
+        pos[dst] = false;
+    } else {
+        for (int i = 0; i < V; ++i) {
+            if (g[src][i] != INT_MAX && !pos[i]) {
+                Number_of_paths(g, i, dst, pos);
+                pos[i] = false;
+            }
+        }
+    }
+    printf("%d\n", count);
+}
+
+int PriorityQueueExtractMin(int* D, bool* pos)
+{
+    int min = INT_MAX, min_index;
+    for (int i = 0; i < V; ++i) {
+        if (D[i] <= min && !pos[i]) {
+            min = D[i];
+            min_index = i;
+        }
+    }
+    return min_index;
+}
+
+void ShortestPathDijkstra(int g[V][V], int src, int* D, bool* pos, int* prev)
+{
+    for (int i = 0; i < V; ++i) {
+        D[i] = INT_MAX;
+        pos[i] = false;
+        prev[i] = -1;
+    }
+    D[src] = 0;
+    for (int i = 0; i < V - 1; ++i) {
+        int u = PriorityQueueExtractMin(D, pos);
+        pos[u] = true;
+        for (int v = 0; v < V; ++v) {
+            if (D[u] + g[u][v] < D[v]) {
+                D[v] = D[u] + g[u][v];
+                prev[v] = u;
+            }
+        }
+    }
+}
+
+void print(int g[V][V], int* D, int src, int* prev, int dst, bool* pos)
+{
+    ShortestPathDijkstra(g, src, D, pos, prev);
+    printf("Расстояние от вершины %d до всех остальных\n", src + 1);
+    for (int i = 0; i < V; ++i) {
+        printf("%d - %d : %d\n", src + 1, i + 1, D[i]);
+    }
+    /*for (int i = 0, z = 1; i < V; ++i) {
+        printf("%d : %d\n", z++, prev[i] + 1);
+    }
+    printf("\n");
+    int i = dst, count = 0;
+    while (prev[i] != prev[src]) {
+        i = prev[i];
+        count++;
+    }
+    i = dst;
+    int j = 1, path[count];
+    while (prev[i] != prev[src]) {
+        path[count - j++] = i + 1;
+        i = prev[i];
+    }
+    printf("Путь из вершины %d в вершину %d\n%d ", src + 1, dst + 1, src + 1);
+    for (int i = 0; i < count; ++i) {
+        printf("%d ", path[i]);
+    }
+    printf("\n");
+}
+*/
+
+void my_flush(void)
+{
+ int c;
+    do {
+        c = getchar();
+    } while (c != EOF && c != '\n');
+}
+
+int main()
+{
+    srand(time(NULL));
+    
+    int src, dst,K,Z;
+
+    do {
+    printf("Введите количество вершин : ");
+    K = scanf("%d", &V);
+    my_flush();
+    }while (K != 1||K<=0);
+
+    int** g = malloc(sizeof(int*) * V);
+    for (int i = 0; i < V; ++i) {
+        g[i] = malloc(sizeof(int) * V);
+    }
+    for(int i = 0; i < V; ++i){
+        for(int j = 0; j < V; ++j){
+            g[i][j] = INT_MAX;
+        }
+    }
+    for(int i = 0; i < V; ++i){
+        for(int j = 0; j < V; ++j){
+            if(i != j){
+                g[i][j] = 1 + rand() % 20;
+            }
+        }
+    }
+    int N;
+    int M;
+    do {
+    printf("Введите начальную вершину = ");
+    N = scanf("%d", &src);
+    my_flush();
+    }while (N != 1);
+    src--;
+    
+    do {
+    printf("Введите конечнню вершину = ");
+    M = scanf("%d", &dst);
+    my_flush();
+    }while (M != 1);
+    dst--;
+  
+  
+    int ch;
+    int P;
+    int* D = malloc(sizeof(int) * V);
+    bool* pos = malloc(sizeof(bool) * V);
+    int* prev = malloc(sizeof(int) * V);
+    do{
+    printf( "Что бы вы хотели найти, введите соответствующий символ:\n" );
+    printf( "1. Кол-во путей между вершинами:\n" );
+    printf( "2. Кротчайший путь между вершинами: \n" );        
+    printf( "3. Обход в глубину: \n" );
+    printf( "4. Обход в ширину:\n" );
+    printf( "5. Выход:\n" );
+    printf( "Ваш выбор: " );
+    P = scanf("%d",&ch);
+    switch(ch)
+    {
+        case 1:           
+        printf("Количество путей из %d в %d - ", src + 1, dst + 1);
+        Number_of_paths(g, src, dst, pos, V, &count);
+        printf("%d\n", count);
+        count = 0;
+        for (int i = 0; i < V; ++i) {
+            pos[i] = false;
+            prev[i] = -1;
+        }
+        break;
+        case 2: 
+        count = 0; 
+        print(g, D, src, prev, dst, pos, V); // dst - вершина у которой смотрим путь
+        for (int i = 0; i < V; ++i) {
+            pos[i] = false;
+            prev[i] = -1;
+        }
+        break;
+        case 3:
+        printf("Обход в глубину\n");
+        dfs(g, pos, src, prev, V);
+        printf("\n");
+        for (int i = 0; i < V; ++i) {
+            pos[i] = false;
+            prev[i] = -1;
+        }
+            break;
+        case 4:
+        printf("Обход в ширину\n");
+        bfs(g, src, pos, prev, V);
+        printf("\n");
+        break;
+        case 5:
+        break;
+        default:
+            printf( "Некорректный символ, попробуйте ещё раз.\n" );
+    }
+    my_flush();
+    }while(P != 1);
+    free(D);
+    free(pos);
+    free(prev);
+}
