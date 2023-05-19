@@ -57,7 +57,6 @@ void Number_of_paths(int** g, int src, int dst, bool* pos, int V, int* count)
             }
         }
     }
-    // printf("%d\n", count);
 }
 
 int PriorityQueueExtractMin(int* D, bool* pos, int V)
@@ -95,14 +94,10 @@ void ShortestPathDijkstra(int** g, int src, int* D, bool* pos, int* prev, int V)
 void print(int** g, int* D, int src, int* prev, int dst, bool* pos, int V)
 {
     ShortestPathDijkstra(g, src, D, pos, prev, V);
-    printf("Расстояние от вершины %d до всех остальных\n", src + 1);
-    for (int i = 0; i < V; ++i) {
-        printf("%d - %d : %d\n", src + 1, i + 1, D[i]);
-    }
-    /*for (int i = 0, z = 1; i < V; ++i) {
-        printf("%d : %d\n", z++, prev[i] + 1);
-    }*/
-    printf("\n");
+    printf("Расстояние от вершины %d до вершины %d - %d\n",
+           src + 1,
+           dst + 1,
+           D[dst]);
     int i = dst, count = 0;
     while (prev[i] != prev[src]) {
         i = prev[i];
