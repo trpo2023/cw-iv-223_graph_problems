@@ -5,9 +5,6 @@
 #include <time.h>
 
 #define INT_MAX 1000000000
-#define MAX_V 99
-#define NAME_SIZE 111
-int V;
 
 void my_flush(void)
 {
@@ -20,7 +17,7 @@ void my_flush(void)
 int main()
 {
     srand(time(NULL));
-    int src, dst, K;
+    int src, dst, K, V;
     do {
         printf("Введите количество вершин : ");
         K = scanf("%d", &V);
@@ -38,10 +35,21 @@ int main()
     }
     for (int i = 0; i < V; ++i) {
         for (int j = 0; j < V; ++j) {
-            if (i != j) {
-                g[i][j] = 1 + rand() % 100;
+            int qq = 1 + rand() % 100;
+            if (i != j && qq % 7 != 0 && qq % 5 != 0) {
+                g[i][j] = qq;
             }
         }
+    }
+    for (int i = 0; i < V; ++i) {
+        for (int j = 0; j < V; ++j) {
+            if(g[i][j] == INT_MAX){
+                printf("0 ");
+                continue;
+            }
+            printf("%d ", g[i][j]);
+        }
+        printf("\n");
     }
     int N;
     int M;
@@ -66,15 +74,15 @@ int main()
     int* prev = malloc(sizeof(int) * V);
     do {
         printf("Что бы вы хотели найти, введите соответствующий символ:\n");
-        printf("1. Кол-во путей между вершинами:\n");
+        printf("1. Количество путей между вершинами:\n");
         printf("2. Кротчайший путь между вершинами: \n");
-        printf("3. длиннейший путь между вершинами: \n");
-        printf("4. для выхода:\n");
+        printf("3. Длиннейший путь между вершинами: \n");
+        printf("4. Выход:\n");
         printf("Ваш выбор: ");
         P = scanf("%d", &ch);
         switch (ch) {
         case 1:
-            Number_of_paths(g, src, dst, pos, V, &count);
+            Number_of_paths(g, src, dst, pos, V, &count, prev);
             printf("\nКоличество путей из %d в %d : %d\n",
                    src + 1,
                    dst + 1,

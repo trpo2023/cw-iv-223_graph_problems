@@ -43,16 +43,21 @@ void dfs(int** g, bool* pos, int start, int* prev, int V)
     }
 }
 
-void Number_of_paths(int** g, int src, int dst, bool* pos, int V, int* count)
+void Number_of_paths(
+        int** g, int src, int dst, bool* pos, int V, int* count, int* prev)
 {
     pos[src] = true;
     if (src == dst) {
         *count = *count + 1;
         pos[dst] = false;
+        //printf("%d\n", dst + 1);
+
     } else {
         for (int i = 0; i < V; ++i) {
             if (g[src][i] != INT_MAX && !pos[i]) {
-                Number_of_paths(g, i, dst, pos, V, count);
+                prev[i] = src;
+                //printf("%d -> ", prev[i] + 1);
+                Number_of_paths(g, i, dst, pos, V, count, prev);
                 pos[i] = false;
             }
         }
@@ -109,10 +114,9 @@ void print(int** g, int* D, int src, int* prev, int dst, bool* pos, int V)
         path[count - j++] = i + 1;
         i = prev[i];
     }
-    printf("Путь из вершины %d в вершину %d\n%d ", src + 1, dst + 1, src + 1);
+    printf("Путь из вершины %d в вершину %d\n%d", src + 1, dst + 1, src + 1);
     for (int i = 0; i < count; ++i) {
-        printf("%d ", path[i]);
+        printf(" -> %d", path[i]);
     }
     printf("\n");
 }
-
