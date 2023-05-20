@@ -50,13 +50,13 @@ void Number_of_paths(
     if (src == dst) {
         *count = *count + 1;
         pos[dst] = false;
-        //printf("%d\n", dst + 1);
+        // printf("%d\n", dst + 1);
 
     } else {
         for (int i = 0; i < V; ++i) {
             if (g[src][i] != INT_MAX && !pos[i]) {
                 prev[i] = src;
-                //printf("%d -> ", prev[i] + 1);
+                // printf("%d -> ", prev[i] + 1);
                 Number_of_paths(g, i, dst, pos, V, count, prev);
                 pos[i] = false;
             }

@@ -43,7 +43,7 @@ int main()
     }
     for (int i = 0; i < V; ++i) {
         for (int j = 0; j < V; ++j) {
-            if(g[i][j] == INT_MAX){
+            if (g[i][j] == INT_MAX) {
                 printf("0 ");
                 continue;
             }
