@@ -2,7 +2,7 @@
 #include <libgraph/graph.h>
 #include <stdlib.h>
 
-CTEST(graph, Number_of_paths)
+CTEST(graph, NumberOfPaths)
 {
     int src = 0, dst = 3, V = 4;
     int** g = malloc(sizeof(int*) * V);
@@ -29,7 +29,7 @@ CTEST(graph, Number_of_paths)
     int* D = malloc(sizeof(int) * V);
     bool* pos = malloc(sizeof(bool) * V);
     int* prev = malloc(sizeof(int) * V);
-    Number_of_paths(g, src, dst, pos, V, &count);
+    NumberOfPaths(g, src, dst, pos, V, &count);
     int expected = 5;
     ASSERT_EQUAL(expected, count);
     free(D);

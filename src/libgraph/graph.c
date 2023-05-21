@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#pragma warning(disable : 4996)
+//#pragma warning(disable : 4996)
 
 void NumberOfPaths(int** g, int src, int dst, bool* pos, int V, int* count)
 {
@@ -59,7 +59,7 @@ void ShortestPathDijkstra(int** g, int src, int* D, bool* pos, int* prev, int V)
 
 int LongestPath(int N, int M, int** adj_matrix)
 {
-    setlocale(0, "");
+    //setlocale(0, "");
 
     // заполнение матрицы смежности
     // int** adj_matrix = adj_matrix_init(N);
