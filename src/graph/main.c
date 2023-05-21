@@ -80,7 +80,7 @@ int main()
             } while (M != 1);
             dst--;
             NumberOfPaths(g, src, dst, pos, V, &count);
-            printf("\nКоличество путей из %d в %d : %d\n",
+            printf("Количество путей из %d в %d : %d\n",
                    src + 1,
                    dst + 1,
                    count);
