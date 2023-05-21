@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct queue* queue_create(int maxsize)
+struct queue* QueueCreate(int maxsize)
 {
     struct queue* q = malloc(sizeof(*q));
     if (q != NULL) {
@@ -19,18 +19,18 @@ struct queue* queue_create(int maxsize)
     return q;
 }
 
-void queue_free(struct queue* q)
+void QueueFree(struct queue* q)
 {
     free(q->a);
     free(q);
 }
 
-int queue_size(struct queue* q)
+int QueueSize(struct queue* q)
 {
     return q->size;
 }
 
-int queue_enqueue(struct queue* q, int value)
+int QueueEnqueue(struct queue* q, int value)
 {
     if (q->head == q->tail + 1) {
         fprintf(stderr, "Queue overflow\n");
@@ -43,7 +43,7 @@ int queue_enqueue(struct queue* q, int value)
     return 0;
 }
 
-int queue_dequeue(struct queue* q)
+int QueueDequeue(struct queue* q)
 {
     if (q->head % (q->maxsize + 1) == q->tail) {
         fprintf(stderr, "Queue is empty\n");
