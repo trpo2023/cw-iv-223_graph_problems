@@ -6,7 +6,7 @@
 
 #define INT_MAX 1000000000
 
-void my_flush(void)
+void MyFlush(void)
 {
     int c;
     do {
@@ -23,7 +23,7 @@ int main()
     do {
         printf("Введите количество вершин : ");
         K = scanf("%d", &V);
-        my_flush();
+        MyFlush();
     } while (K != 1 || K <= 0);
     int* D = malloc(sizeof(int) * V);
     bool* pos = malloc(sizeof(bool) * V);
@@ -69,17 +69,17 @@ int main()
         do {
             printf("Введите начальную вершину = ");
             N = scanf("%d", &src);
-            my_flush();
+            MyFlush();
         } while (N != 1);
         src--;
 
         do {
             printf("Введите конечнню вершину = ");
             M = scanf("%d", &dst);
-            my_flush();
+            MyFlush();
         } while (M != 1);
         dst--;
-            Number_of_paths(g, src, dst, pos, V, &count, prev);
+            NumberOfPaths(g, src, dst, pos, V, &count, prev);
             printf("\nКоличество путей из %d в %d : %d\n",
                    src + 1,
                    dst + 1,
@@ -89,26 +89,26 @@ int main()
         do {
             printf("Введите начальную вершину = ");
             N = scanf("%d", &src);
-            my_flush();
+            MyFlush();
         } while (N != 1);
         src--;
 
         do {
             printf("Введите конечнню вершину = ");
             M = scanf("%d", &dst);
-            my_flush();
+            MyFlush();
         } while (M != 1);
         dst--;
-            print(g, D, src, prev, dst, pos, V);
+            Print(g, D, src, prev, dst, pos, V);
             break;
         case 3:
             do {
                 printf("Введите количество ребер : ");
                 K = scanf("%d", &R);
-                my_flush();
+                MyFlush();
             } while (K != 1 || K <= 0);
 
-            int** adj_matrix = adj_matrix_init(V);
+            int** adj_matrix = AdjMatrixInit(V);
             for(int i = 0; i < R; i++){
                 printf("Введите начальную вершину, конечную и длину пути (например: 1 "
                "4 10): ");
@@ -123,6 +123,6 @@ int main()
         default:
             printf("Некорректный символ, попробуйте ещё раз.\n");
         }
-        my_flush();
+        MyFlush();
     } while (P != 1);
 }
