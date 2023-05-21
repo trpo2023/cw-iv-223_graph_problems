@@ -82,8 +82,8 @@ int main()
         P = scanf("%d", &ch);
         switch (ch) {
         case 1:
-            Number_of_paths(g, src, dst, pos, V, &count, prev);
-            printf("\nКоличество путей из %d в %d : %d\n",
+            Number_of_paths(g, src, dst, pos, V, &count);
+            printf("Количество путей из %d в %d : %d\n",
                    src + 1,
                    dst + 1,
                    count);
@@ -101,4 +101,11 @@ int main()
         }
         my_flush();
     } while (P != 1);
+    free(D);
+    free(pos);
+    free(prev);
+    for (int i = 0; i < V; ++i) {
+        free(g[i]);
+    }
+    free(g);
 }

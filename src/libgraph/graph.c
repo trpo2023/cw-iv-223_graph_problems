@@ -1,63 +1,21 @@
 #include "graph.h"
-#include "queue_array.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 enum { INT_MAX = 1000000000 };
 
-void bfs(int** g, int v, bool* pos, int* prev, int V)
-{
-    struct queue* q;
-    for (int i = 0; i < V; i++) {
-        pos[i] = false;
-        prev[i] = -1;
-    }
-    q = queue_create(V); // Создаём очередь
-    pos[v] = true; // Обрабатываем стартовую вершину
-    printf("Vertex % d\n", v + 1);
-    queue_enqueue(q, v);
-    while (queue_size(q) > 0) {
-        int i = queue_dequeue(q);
-        for (int j = 0; j < V; j++) {
-            if (g[i][j] != INT_MAX && !pos[j]) {
-                queue_enqueue(q, j);
-                pos[j] = true;
-                prev[j] = i;
-                printf("Vertex % d\n", j + 1);
-            }
-        }
-    }
-    queue_free(q);
-}
-
-void dfs(int** g, bool* pos, int start, int* prev, int V)
-{
-    pos[start] = true;
-    printf("Vertex % d\n", start + 1);
-    for (int i = 0; i < V; ++i) {
-        if (!pos[i] && g[start][i] != INT_MAX) {
-            prev[i] = start;
-            dfs(g, pos, i, prev, V);
-        }
-    }
-}
-
-void Number_of_paths(
-        int** g, int src, int dst, bool* pos, int V, int* count, int* prev)
+void Number_of_paths(int** g, int src, int dst, bool* pos, int V, int* count)
 {
     pos[src] = true;
     if (src == dst) {
         *count = *count + 1;
         pos[dst] = false;
-        // printf("%d\n", dst + 1);
 
     } else {
         for (int i = 0; i < V; ++i) {
             if (g[src][i] != INT_MAX && !pos[i]) {
-                prev[i] = src;
-                // printf("%d -> ", prev[i] + 1);
-                Number_of_paths(g, i, dst, pos, V, count, prev);
+                Number_of_paths(g, i, dst, pos, V, count);
                 pos[i] = false;
             }
         }
