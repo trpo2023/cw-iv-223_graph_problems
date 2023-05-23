@@ -8,7 +8,15 @@ struct node {
     int lp_count;
 };
 
-void NumberOfPaths(int** g, int src, int dst, bool* pos, int V, int* count);
+void NumberOfPaths(
+        int** g,
+        int src,
+        int dst,
+        bool* pos,
+        int V,
+        int* count,
+        int a,
+        int* prev);
 int PriorityQueueExtractMin(int* D, bool* pos, int V);
 void ShortestPathDijkstra(
         int** g, int src, int* D, bool* pos, int* prev, int V);
