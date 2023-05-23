@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// #pragma warning(disable : 4996)
+#pragma warning(disable : 4996)
 
 #define INT_MAX 1000000000
 
