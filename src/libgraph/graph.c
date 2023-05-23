@@ -16,16 +16,14 @@ void NumberOfPaths(
         int V,
         int* count,
         int a,
-        int* prev,
-        int* b)
+        int* prev)
 {
     pos[src] = true;
     if (src == dst) {
         *count = *count + 1;
         pos[dst] = false;
         prev[a++] = dst;
-        printf("%d) ", *b);
-        *b = *b + 1;
+        printf("%d) ", *count);
         for (int i = 0; i < a - 1; ++i) {
             printf("%d -> ", prev[i] + 1);
         }
@@ -35,7 +33,7 @@ void NumberOfPaths(
         for (int i = 0; i < V; ++i) {
             if (g[src][i] != INT_MAX && !pos[i]) {
                 prev[a++] = src;
-                NumberOfPaths(g, i, dst, pos, V, count, a, prev, b);
+                NumberOfPaths(g, i, dst, pos, V, count, a, prev);
                 a--;
                 pos[i] = false;
             }

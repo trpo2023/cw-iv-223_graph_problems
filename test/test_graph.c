@@ -2,6 +2,8 @@
 #include <libgraph/graph.h>
 #include <stdlib.h>
 
+#define INT_MAX 1000000000
+
 CTEST(graph, NumberOfPaths)
 {
     int src = 0, dst = 3, V = 4;
@@ -9,27 +11,27 @@ CTEST(graph, NumberOfPaths)
     for (int i = 0; i < V; ++i) {
         g[i] = malloc(sizeof(int) * V);
     }
-    g[0][0] = 0;
+    g[0][0] = INT_MAX;
     g[0][1] = 2;
     g[0][2] = 15;
     g[0][3] = 7;
     g[1][0] = 2;
-    g[1][1] = 0;
+    g[1][1] = INT_MAX;
     g[1][2] = 10;
     g[1][3] = 8;
     g[2][0] = 15;
     g[2][1] = 10;
-    g[2][2] = 0;
+    g[2][2] = INT_MAX;
     g[2][3] = 1;
     g[3][0] = 7;
     g[3][1] = 8;
     g[3][2] = 1;
-    g[3][3] = 0;
-    int count = 0;
+    g[3][3] = INT_MAX;
+    int count = 0, a = 0;
     int* D = malloc(sizeof(int) * V);
     bool* pos = malloc(sizeof(bool) * V);
     int* prev = malloc(sizeof(int) * V);
-    NumberOfPaths(g, src, dst, pos, V, &count);
+    NumberOfPaths(g, src, dst, pos, V, &count, a, prev);
     int expected = 5;
     ASSERT_EQUAL(expected, count);
     free(D);
@@ -48,22 +50,22 @@ CTEST(graph, ShortestPathDijkstra)
     for (int i = 0; i < V; ++i) {
         g[i] = malloc(sizeof(int) * V);
     }
-    g[0][0] = 0;
+    g[0][0] = INT_MAX;
     g[0][1] = 2;
     g[0][2] = 15;
     g[0][3] = 7;
     g[1][0] = 2;
-    g[1][1] = 0;
+    g[1][1] = INT_MAX;
     g[1][2] = 10;
     g[1][3] = 8;
     g[2][0] = 15;
     g[2][1] = 10;
-    g[2][2] = 0;
+    g[2][2] = INT_MAX;
     g[2][3] = 1;
     g[3][0] = 7;
     g[3][1] = 8;
     g[3][2] = 1;
-    g[3][3] = 0;
+    g[3][3] = INT_MAX;
     int* D = malloc(sizeof(int) * V);
     bool* pos = malloc(sizeof(bool) * V);
     int* prev = malloc(sizeof(int) * V);

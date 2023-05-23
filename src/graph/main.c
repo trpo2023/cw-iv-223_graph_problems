@@ -16,7 +16,7 @@ void MyFlush(void)
 
 int main()
 {
-    // srand(time(NULL));
+    srand(time(NULL));
     int ch, P;
     int src, dst, K, V, R, N, M;
     int count = 0;
@@ -79,8 +79,8 @@ int main()
                 MyFlush();
             } while (M != 1);
             dst--;
-            int a = 0, b = 1;
-            NumberOfPaths(g, src, dst, pos, V, &count, a, prev, &b);
+            int a = 0;
+            NumberOfPaths(g, src, dst, pos, V, &count, a, prev);
             printf("Количество путей из %d в %d : %d\n",
                    src + 1,
                    dst + 1,

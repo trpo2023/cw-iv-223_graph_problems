@@ -16,8 +16,7 @@ void NumberOfPaths(
         int V,
         int* count,
         int a,
-        int* prev,
-        int* b);
+        int* prev);
 int PriorityQueueExtractMin(int* D, bool* pos, int V);
 void ShortestPathDijkstra(
         int** g, int src, int* D, bool* pos, int* prev, int V);
