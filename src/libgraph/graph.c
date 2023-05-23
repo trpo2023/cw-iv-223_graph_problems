@@ -1,66 +1,40 @@
 #include "graph.h"
-#include "queue_array.h"
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 
-#pragma warning (disable:4996)
+#pragma warning(disable : 4996)
 
-//enum { INT_MAX = 1000000000 };
-
-void Bfs(int** g, int v, bool* pos, int* prev, int V)
-{
-    struct queue* q;
-    for (int i = 0; i < V; i++) {
-        pos[i] = false;
-        prev[i] = -1;
-    }
-    q = QueueCreate(V); 
-    pos[v] = true; 
-    printf("Vertex % d\n", v + 1);
-    QueueEnqueue(q, v);
-    while (QueueSize(q) > 0) {
-        int i = QueueDequeue(q);
-        for (int j = 0; j < V; j++) {
-            if (g[i][j] != INT_MAX && !pos[j]) {
-                QueueEnqueue(q, j);
-                pos[j] = true;
-                prev[j] = i;
-                printf("Vertex % d\n", j + 1);
-            }
-        }
-    }
-    QueueFree(q);
-}
-
-void Dfs(int** g, bool* pos, int start, int* prev, int V)
-{
-    pos[start] = true;
-    printf("Vertex % d\n", start + 1);
-    for (int i = 0; i < V; ++i) {
-        if (!pos[i] && g[start][i] != INT_MAX) {
-            prev[i] = start;
-            Dfs(g, pos, i, prev, V);
-        }
-    }
-}
+#define INT_MAX 1000000000
 
 void NumberOfPaths(
-        int** g, int src, int dst, bool* pos, int V, int* count, int* prev)
+        int** g,
+        int src,
+        int dst,
+        bool* pos,
+        int V,
+        int* count,
+        int a,
+        int* prev)
 {
     pos[src] = true;
     if (src == dst) {
         *count = *count + 1;
         pos[dst] = false;
-        // printf("%d\n", dst + 1);
+        prev[a++] = dst;
+        printf("%d) ", *count);
+        for (int i = 0; i < a - 1; ++i) {
+            printf("%d -> ", prev[i] + 1);
+        }
+        printf("%d\n", prev[a - 1] + 1);
 
     } else {
         for (int i = 0; i < V; ++i) {
             if (g[src][i] != INT_MAX && !pos[i]) {
-                prev[i] = src;
-                // printf("%d -> ", prev[i] + 1);
-                NumberOfPaths(g, i, dst, pos, V, count, prev);
+                prev[a++] = src;
+                NumberOfPaths(g, i, dst, pos, V, count, a, prev);
+                a--;
                 pos[i] = false;
             }
         }
@@ -101,12 +75,12 @@ void ShortestPathDijkstra(int** g, int src, int* D, bool* pos, int* prev, int V)
 
 // longest path
 
-int LongestPath(int N, int M, int** adj_matrix){
-
-	setlocale(0, "");
+int LongestPath(int N, int M, int** adj_matrix)
+{
+    // setlocale(0, "");
 
     // заполнение матрицы смежности
-    //int** adj_matrix = adj_matrix_init(N);
+    // int** adj_matrix = adj_matrix_init(N);
 
     /*for (int i = 0; i < M; i++) {
         printf("Введите начальную вершину, конечную и длину пути (например: 1 "
@@ -141,14 +115,14 @@ int LongestPath(int N, int M, int** adj_matrix){
             }
         }
     }
-    //printf("Самый длинный путь: %d\n", node_array[N - 1].lp_len);
-    //printf("Количество самых длинных путей: %d\n", node_array[N - 1].lp_count);
+    // printf("Самый длинный путь: %d\n", node_array[N - 1].lp_len);
+    // printf("Количество самых длинных путей: %d\n", node_array[N -
+    // 1].lp_count);
 
     free(node_array);
     AdjMatrixFree(N, adj_matrix);
 
     return node_array[N - 1].lp_len;
-
 }
 
 void NodeInit(struct node* new_node, int is_s)
