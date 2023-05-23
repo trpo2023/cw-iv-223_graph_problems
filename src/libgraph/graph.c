@@ -4,19 +4,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//#pragma warning(disable : 4996)
+// #pragma warning(disable : 4996)
 
-void NumberOfPaths(int** g, int src, int dst, bool* pos, int V, int* count)
+#define INT_MAX 1000000000
+
+void NumberOfPaths(
+        int** g,
+        int src,
+        int dst,
+        bool* pos,
+        int V,
+        int* count,
+        int a,
+        int* prev,
+        int* b)
 {
     pos[src] = true;
     if (src == dst) {
         *count = *count + 1;
         pos[dst] = false;
+        prev[a++] = dst;
+        printf("%d) ", *b);
+        *b = *b + 1;
+        for (int i = 0; i < a - 1; ++i) {
+            printf("%d -> ", prev[i] + 1);
+        }
+        printf("%d\n", prev[a - 1] + 1);
 
     } else {
         for (int i = 0; i < V; ++i) {
             if (g[src][i] != INT_MAX && !pos[i]) {
-                NumberOfPaths(g, i, dst, pos, V, count);
+                prev[a++] = src;
+                NumberOfPaths(g, i, dst, pos, V, count, a, prev, b);
+                a--;
                 pos[i] = false;
             }
         }
@@ -59,7 +79,7 @@ void ShortestPathDijkstra(int** g, int src, int* D, bool* pos, int* prev, int V)
 
 int LongestPath(int N, int M, int** adj_matrix)
 {
-    //setlocale(0, "");
+    // setlocale(0, "");
 
     // заполнение матрицы смежности
     // int** adj_matrix = adj_matrix_init(N);
